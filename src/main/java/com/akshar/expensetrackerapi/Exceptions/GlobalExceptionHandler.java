@@ -29,25 +29,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<Errorobject>(errorobject,HttpStatus.INTERNAL_SERVER_ERROR);
     }
-//    @ExceptionHandler(ResourceNotFoundException.class)
-//    public ResponseEntity<Errorobject> handleExpenseNotFoundException(ResourceNotFoundException ex, WebRequest request){
-//        Errorobject errorobject = new Errorobject();
-//        errorobject.setStatusCode(HttpStatus.NOT_FOUND.value());
-//        errorobject.setMessage(ex.getMessage());
-//        errorobject.setTimestamp(new Date());
-//
-//        return new ResponseEntity<Errorobject>(errorobject,HttpStatus.NOT_FOUND);
-//    }
-//
-//    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-//    public ResponseEntity<Errorobject> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request){
-//        Errorobject errorobject = new Errorobject();
-//        errorobject.setStatusCode(HttpStatus.BAD_REQUEST.value());
-//        errorobject.setMessage(ex.getMessage());
-//        errorobject.setTimestamp(new Date());
-//
-//        return new ResponseEntity<Errorobject>(errorobject,HttpStatus.BAD_REQUEST);
-//    }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Errorobject> handleExpenseNotFoundException(ResourceNotFoundException ex, WebRequest request){
+        Errorobject errorobject = new Errorobject();
+        errorobject.setStatusCode(HttpStatus.NOT_FOUND.value());
+        errorobject.setMessage(ex.getMessage());
+        errorobject.setTimestamp(new Date());
+
+        return new ResponseEntity<Errorobject>(errorobject,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Errorobject> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request){
+        Errorobject errorobject = new Errorobject();
+        errorobject.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        errorobject.setMessage(ex.getMessage());
+        errorobject.setTimestamp(new Date());
+
+        return new ResponseEntity<Errorobject>(errorobject,HttpStatus.BAD_REQUEST);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request){
@@ -63,5 +63,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         map.put("messages",errors);
         return new ResponseEntity<Object>(map,HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler(ItemAlreadyExistsException.class)
+    public ResponseEntity<Errorobject> handleResourceNotFoundException(ItemAlreadyExistsException ex, WebRequest request){
+        Errorobject errorobject = new Errorobject();
+        errorobject.setStatusCode(HttpStatus.CONFLICT.value());
+        errorobject.setMessage(ex.getMessage());
+        errorobject.setTimestamp(new Date());
+
+        return new ResponseEntity<Errorobject>(errorobject,HttpStatus.CONFLICT);
     }
 }

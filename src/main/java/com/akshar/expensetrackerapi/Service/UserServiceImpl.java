@@ -2,6 +2,7 @@ package com.akshar.expensetrackerapi.Service;
 
 import com.akshar.expensetrackerapi.Entity.User;
 import com.akshar.expensetrackerapi.Entity.UserModel;
+import com.akshar.expensetrackerapi.Exceptions.ItemAlreadyExistsException;
 import com.akshar.expensetrackerapi.Repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User createUser(UserModel userModel) {
+        if(userRepository.existsByEmail(userModel.getEmail())){
+            throw new ItemAlreadyExistsException("User is already register with email :" +userModel.getEmail());
+        }
         User user = new User();
-        System.out.println(user);
         BeanUtils.copyProperties(userModel, user);
-        System.out.println(user);
-        System.out.println(userModel);
         return userRepository.save(user);
     }
 }

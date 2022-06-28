@@ -8,13 +8,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 public class UserController {
     @Autowired
     private UserService userService;
 
     @PostMapping("/register")
-    public User save(@RequestBody UserModel userModel) {
+    public User save(@Valid @RequestBody UserModel userModel) {
         return userService.createUser(userModel);
     }
 }
