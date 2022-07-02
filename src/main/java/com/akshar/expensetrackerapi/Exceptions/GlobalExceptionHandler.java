@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +64,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(map,HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(ItemAlreadyExistsException.class)
-    public ResponseEntity<Errorobject> handleResourceNotFoundException(ItemAlreadyExistsException ex, WebRequest request){
+    public ResponseEntity<Errorobject> handleItemAlreadyExistsException(ItemAlreadyExistsException ex, WebRequest request){
         Errorobject errorobject = new Errorobject();
         errorobject.setStatusCode(HttpStatus.CONFLICT.value());
         errorobject.setMessage(ex.getMessage());
