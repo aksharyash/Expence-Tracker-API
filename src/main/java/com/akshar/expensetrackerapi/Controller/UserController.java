@@ -13,10 +13,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
-    public User save(@Valid @RequestBody UserModel userModel) {
-        return userService.createUser(userModel);
-    }
 
     @GetMapping(value = "/user/{id}")
     public User readUser(@PathVariable Long id){

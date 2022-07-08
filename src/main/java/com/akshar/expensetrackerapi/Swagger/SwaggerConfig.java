@@ -1,4 +1,4 @@
-package com.akshar.expensetrackerapi.Config;
+package com.akshar.expensetrackerapi.Swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
