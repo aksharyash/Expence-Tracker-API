@@ -7,11 +7,14 @@ import com.akshar.expensetrackerapi.Exceptions.ResourceNotFoundException;
 import com.akshar.expensetrackerapi.Repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService{
 
+    @Autowired
+    private PasswordEncoder bcryptEncoder;
     @Autowired
     private UserRepository userRepository;
 
@@ -22,6 +25,7 @@ public class UserServiceImpl implements UserService{
         }
         User user = new User();
         BeanUtils.copyProperties(userModel, user);
+        user.setPassword(bcryptEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -36,7 +40,7 @@ public class UserServiceImpl implements UserService{
         User user = readUser(id);
         user.setName(userModel.getName() != null ? userModel.getName() : user.getName());
         user.setEmail(userModel.getEmail() != null ? userModel.getEmail() : user.getEmail());
-        user.setPassword(userModel.getPassword() != null ? userModel.getPassword() : user.getPassword());
+        user.setPassword(userModel.getPassword() != null ? bcryptEncoder.encode(userModel.getPassword()) : user.getPassword());
         user.setAge(userModel.getAge() != null ? userModel.getAge() : user.getAge());
         return userRepository.save(user);
 
